@@ -1,4 +1,12 @@
-import { Component, Input, SimpleChanges, inject, signal, OnInit, OnChanges } from '@angular/core';
+import {
+  Component,
+  Input,
+  SimpleChanges,
+  inject,
+  signal,
+  OnInit,
+  OnChanges,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLinkWithHref } from '@angular/router';
 import { ProductComponent } from '@products/components/product/product.component';
@@ -10,12 +18,11 @@ import { CategoryService } from '@shared/services/category.service';
 import { Category } from '@shared/models/category.model';
 
 @Component({
-    selector: 'app-list',
-    imports: [CommonModule, ProductComponent, RouterLinkWithHref],
-    templateUrl: './list.component.html'
+  selector: 'app-list',
+  imports: [CommonModule, ProductComponent, RouterLinkWithHref],
+  templateUrl: './list.component.html',
 })
 export default class ListComponent implements OnInit, OnChanges {
-
   products = signal<Product[]>([]);
   categories = signal<Category[]>([]);
   private cartService = inject(CartService);
@@ -28,38 +35,34 @@ export default class ListComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes['category_id']){
-    this.getProducts();
+    if (changes['category_id']) {
+      this.getProducts();
     }
   }
 
   addToCart(product: Product) {
-    this.cartService.addToCart(product)
+    this.cartService.addToCart(product);
   }
 
   private getProducts() {
-    this.productService.getProducts(this.category_id)
-    .subscribe({
+    this.productService.getProducts(this.category_id).subscribe({
       next: (products) => {
         this.products.set(products);
       },
       error: (err) => {
         console.error('Error fetching products:', err);
-        
-      }
-    })
+      },
+    });
   }
 
   private getCategories() {
-    this.categoryService.getAll()
-    .subscribe({
+    this.categoryService.getAll().subscribe({
       next: (data) => {
         this.categories.set(data);
       },
-       error: (err) => {
+      error: (err) => {
         console.error('Error fetching products:', err);
-        
-      }
-    })
+      },
+    });
   }
 }
