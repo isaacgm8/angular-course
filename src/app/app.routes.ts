@@ -12,13 +12,18 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./domains/products/pages/list/list.component'),
       },
+        {
+        path: 'category/:slug',
+        loadComponent: () =>
+          import('./domains/products/pages/list/list.component'),
+      },
       {
         path: 'about',
         loadComponent: () =>
           import('./domains/info/pages/about/about.component'),
       },
       {
-        path: 'product/:id',
+        path: 'product/:slug',
         loadComponent: () =>
           import(
             './domains/products/pages/product-detail/product-detail.component'

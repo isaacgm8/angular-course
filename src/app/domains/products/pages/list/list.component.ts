@@ -10,6 +10,7 @@ import {
 import { CommonModule } from '@angular/common';
 import { RouterLinkWithHref } from '@angular/router';
 import { ProductComponent } from '@products/components/product/product.component';
+import { ActivatedRoute } from '@angular/router';
 
 import { Product } from '@shared/models/product.model';
 import { CartService } from '@shared/services/cart.service';
@@ -28,24 +29,33 @@ export default class ListComponent implements OnInit, OnChanges {
   private cartService = inject(CartService);
   private productService = inject(ProductService);
   private categoryService = inject(CategoryService);
-  @Input() category_id?: string;
+    private route = inject(ActivatedRoute);
+   slug: string | null = null;
 
-  ngOnInit() {
-    this.getCategories();
-  }
-
-  ngOnChanges(changes: SimpleChanges) {
+     ngOnChanges(changes: SimpleChanges) {
     if (changes['category_id']) {
       this.getProducts();
     }
   }
 
+ ngOnInit() {
+    this.route.paramMap.subscribe(params => {
+      this.slug = params.get('slug');
+       this.getProducts(); 
+    });
+    this.getCategories();
+  }
+    
   addToCart(product: Product) {
     this.cartService.addToCart(product);
   }
 
-  private getProducts() {
-    this.productService.getProducts(this.category_id).subscribe({
+  private getProducts() { 
+     const params: any = {};
+      if (this.slug) {
+        params.category_slug = this.slug;
+  }
+    this.productService.getProducts(params).subscribe({
       next: (products) => {
         this.products.set(products);
       },

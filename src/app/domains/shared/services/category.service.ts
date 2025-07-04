@@ -10,6 +10,6 @@ export class CategoryService {
   private http = inject(HttpClient);
 
   getAll() {
-    return this.http.get<Category[]>(`${environment.apiUrl}api/v1/categories`);
+    return this.http.get<Category[]>(`${environment.apiUrl}/api/v1/categories`);
   }
 }
