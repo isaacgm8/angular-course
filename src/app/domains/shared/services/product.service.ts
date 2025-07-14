@@ -29,6 +29,4 @@ export class ProductService {
     const url = `${environment.apiUrl}/api/v1/products/slug/${slug}`;
     return this.http.get<Product>(url);
   }
-
-
 }

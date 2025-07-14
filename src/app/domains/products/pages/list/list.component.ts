@@ -1,4 +1,4 @@
-import { Component, inject, input, resource} from '@angular/core';
+import { Component, inject, input, resource } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLinkWithHref } from '@angular/router';
 import { ProductComponent } from '@products/components/product/product.component';
@@ -14,35 +14,33 @@ import { rxResource } from '@angular/core/rxjs-interop';
   imports: [CommonModule, ProductComponent, RouterLinkWithHref],
   templateUrl: './list.component.html',
 })
-export default class ListComponent{
+export default class ListComponent {
   private cartService = inject(CartService);
   private productService = inject(ProductService);
   private categoryService = inject(CategoryService);
   readonly slug = input<string>();
 
-
   categoriesResource = resource({
-    loader: () => this.categoryService.getAllPromise()
-  })
+    loader: () => this.categoryService.getAllPromise(),
+  });
 
   productsResource = rxResource({
     request: () => ({ category_slug: this.slug() }),
     loader: ({ request }) => this.productService.getProducts(request),
-  })
-    
+  });
+
   addToCart(product: Product) {
     this.cartService.addToCart(product);
   }
-
 
   resetCategories() {
     this.categoriesResource.set([]);
   }
 
   reloadCtegories() {
-    this.categoriesResource.reload(); 
+    this.categoriesResource.reload();
   }
   reloadProducts() {
-    this.productsResource.reload()
+    this.productsResource.reload();
   }
 }
