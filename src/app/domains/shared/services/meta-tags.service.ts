@@ -14,27 +14,25 @@ const defaultMetaData: PageMetaData = {
   description: 'Ng store is a store for Ng products',
   image: '',
   url: environment.domain,
-}
+};
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class MetaTagsService {
-  titleService = inject(Title)
-  metaService = inject(Meta)
+  titleService = inject(Title);
+  metaService = inject(Meta);
 
   updateMetaTags(metaData: Partial<PageMetaData>) {
     const metaDataToUpdate = {
       ...defaultMetaData,
-      ...metaData
-    }
+      ...metaData,
+    };
 
     const tags = this.generateMetaDefinitions(metaDataToUpdate);
 
-    tags.forEach(tag => this.metaService.updateTag(tag));
+    tags.forEach((tag) => this.metaService.updateTag(tag));
     this.titleService.setTitle(metaDataToUpdate.title);
- 
- 
   }
 
   private generateMetaDefinitions(metaData: PageMetaData): MetaDefinition[] {
@@ -62,7 +60,7 @@ export class MetaTagsService {
       {
         property: 'og:url',
         content: metaData.url,
-      }
+      },
     ];
   }
 }

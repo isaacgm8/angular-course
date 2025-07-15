@@ -29,4 +29,9 @@ export class ProductService {
     const url = `${environment.apiUrl}/api/v1/products/slug/${slug}`;
     return this.http.get<Product>(url);
   }
+
+  getRelatedProducts(slug: string) {
+    const url = `${environment.apiUrl}/api/v1/products/slug/${slug}/related`;
+    return this.http.get<Product[]>(url);
+  }
 }

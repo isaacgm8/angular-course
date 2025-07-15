@@ -1,4 +1,4 @@
-import { domainToASCII } from "url";
+import { domainToASCII } from 'url';
 
 export const environment = {
   production: false,

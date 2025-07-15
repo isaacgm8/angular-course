@@ -22,7 +22,7 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./domains/info/pages/about/about.component'),
       },
-       {
+      {
         path: 'locations',
         loadComponent: () =>
           import('./domains/info/pages/locations/locations.component'),
